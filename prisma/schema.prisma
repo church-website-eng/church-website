@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String   @id @default(cuid())
+  name           String
+  email          String   @unique
+  hashedPassword String
+  role           String   @default("MEMBER") // MEMBER or ADMIN
+  approved       Boolean  @default(false)
+  createdAt      DateTime @default(now())
+}
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model PrayerRequest {
+  id        String   @id @default(cuid())
+  name      String
+  email     String?
+  category  String?
+  request   String
+  isPublic  Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model NewsletterSubscriber {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  subscribedAt DateTime @default(now())
+  active       Boolean  @default(true)
+}
+
+model VisitorRegistration {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  date      String?
+  guests    String?
+  questions String?
+  createdAt DateTime @default(now())
+}
+
+model SacramentRequest {
+  id            String   @id @default(cuid())
+  name          String
+  email         String
+  phone         String?
+  type          String
+  preferredDate String?
+  details       String?
+  createdAt     DateTime @default(now())
+}
+
+model GroupJoinRequest {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  groupName String
+  createdAt DateTime @default(now())
+}
+
+model Testimony {
+  id        String   @id @default(cuid())
+  name      String
+  title     String?
+  body      String
+  approved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Donation {
+  id              String   @id @default(cuid())
+  email           String?
+  amount          Float
+  fund            String?
+  frequency       String?
+  stripeSessionId String?
+  status          String   @default("pending")
+  createdAt       DateTime @default(now())
+}
+
+model SiteContent {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @default(now()) @updatedAt
+}
