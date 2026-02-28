@@ -22,6 +22,10 @@ const contentLinks = [
   { href: "/admin/content/announcements", label: "Announcements" },
   { href: "/admin/content/about", label: "About Page" },
   { href: "/admin/content/ministries", label: "Ministries" },
+  { href: "/admin/content/sermons", label: "Sermons" },
+  { href: "/admin/content/rentals", label: "Hall Rentals" },
+  { href: "/admin/content/blog", label: "Blog Posts" },
+  { href: "/admin/content/events", label: "Events" },
 ];
 
 export default function AdminSidebar() {
