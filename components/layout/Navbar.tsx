@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FiMenu, FiX, FiChevronDown } from "react-icons/fi";
 import ThemeToggle from "./ThemeToggle";
+import LiveBadge from "./LiveBadge";
 import SearchModal from "@/components/ui/SearchModal";
 
 const mainLinks = [
@@ -131,6 +132,7 @@ export default function Navbar() {
           >
             Members
           </Link>
+          <LiveBadge />
           <SearchModal />
           <ThemeToggle />
           <Link
