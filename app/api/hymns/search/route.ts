@@ -1,5 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
-import hymns from "@/data/hymns.json";
+import staticHymns from "@/data/hymns.json";
+import { prisma } from "@/lib/db";
+
+type Hymn = { number: number; yoruba: string; english: string; solfa?: string };
+
+async function getHymns(): Promise<Hymn[]> {
+  try {
+    const row = await prisma.siteContent.findUnique({ where: { key: "hymnal" } });
+    if (row) {
+      const parsed = JSON.parse(row.value);
+      if (parsed.hymns?.length) return parsed.hymns;
+    }
+  } catch {
+    // fall through
+  }
+  return staticHymns as Hymn[];
+}
 
 export async function GET(req: NextRequest) {
   const q = req.nextUrl.searchParams.get("q")?.toLowerCase() || "";
@@ -7,7 +23,9 @@ export async function GET(req: NextRequest) {
     return NextResponse.json([]);
   }
 
-  const results = (hymns as Array<{ number: number; yoruba: string; english: string; solfa: string }>)
+  const hymns = await getHymns();
+
+  const results = hymns
     .filter((h) => {
       const num = String(h.number);
       const eng = (h.english || "").toLowerCase();

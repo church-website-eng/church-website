@@ -14,6 +14,7 @@ const editors = [
   { href: "/admin/content/rentals", label: "Hall Rentals", description: "Rental halls, capacity, rates, and amenities" },
   { href: "/admin/content/blog", label: "Blog Posts", description: "Blog articles, authors, and categories" },
   { href: "/admin/content/events", label: "Events", description: "Upcoming events, dates, times, and locations" },
+  { href: "/admin/content/hymnal", label: "Hymnal", description: "CCC hymns — English, Yoruba, and tonic solfa" },
   { href: "/admin/content/live", label: "Live Stream", description: "YouTube & Facebook live stream settings" },
 ];
 

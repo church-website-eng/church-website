@@ -26,6 +26,7 @@ const contentLinks = [
   { href: "/admin/content/rentals", label: "Hall Rentals" },
   { href: "/admin/content/blog", label: "Blog Posts" },
   { href: "/admin/content/events", label: "Events" },
+  { href: "/admin/content/hymnal", label: "Hymnal" },
   { href: "/admin/content/live", label: "Live Stream" },
 ];
 

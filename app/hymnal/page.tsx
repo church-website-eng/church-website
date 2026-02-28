@@ -24,10 +24,24 @@ export default function HymnalPage() {
   const perPage = 50;
 
   useEffect(() => {
-    fetch("/data/hymns.json")
+    // Try DB first, fall back to static JSON
+    fetch("/api/content/hymnal")
       .then((r) => r.json())
-      .then((data) => setHymns(data))
-      .catch(() => {});
+      .then((res) => {
+        if (res.value?.hymns?.length) {
+          setHymns(res.value.hymns);
+        } else {
+          return fetch("/data/hymns.json")
+            .then((r) => r.json())
+            .then((data) => setHymns(data));
+        }
+      })
+      .catch(() => {
+        fetch("/data/hymns.json")
+          .then((r) => r.json())
+          .then((data) => setHymns(data))
+          .catch(() => {});
+      });
   }, []);
 
   const filtered = hymns.filter((h) => {
