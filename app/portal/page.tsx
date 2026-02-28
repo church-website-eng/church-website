@@ -3,7 +3,7 @@ import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
-import { FiUser, FiUsers, FiCalendar, FiHeart } from "react-icons/fi";
+import { FiUser, FiUsers, FiCalendar, FiHeart, FiBook } from "react-icons/fi";
 
 export default async function PortalDashboard() {
   const session = await getServerSession(authOptions);
@@ -24,6 +24,12 @@ export default async function PortalDashboard() {
       description: "Browse and join small groups",
       icon: <FiUsers className="text-accent" size={24} />,
       href: "/portal/groups",
+    },
+    {
+      title: "Member Directory",
+      description: "Find and connect with other members",
+      icon: <FiBook className="text-accent" size={24} />,
+      href: "/portal/directory",
     },
     {
       title: "Upcoming Events",

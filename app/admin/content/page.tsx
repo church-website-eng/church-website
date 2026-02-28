@@ -8,8 +8,13 @@ const editors = [
   { href: "/admin/content/service-times", label: "Service Times", description: "Weekly service schedule and worship aspects" },
   { href: "/admin/content/stats", label: "Homepage Stats", description: "Counters shown on the homepage (members, years, etc.)" },
   { href: "/admin/content/announcements", label: "Announcements", description: "Parish bulletins and announcements" },
-  { href: "/admin/content/about", label: "About Page", description: "Church history and beliefs" },
+  { href: "/admin/content/about", label: "About Page", description: "Church history, beliefs, and leadership" },
   { href: "/admin/content/ministries", label: "Ministries", description: "Ministry names, descriptions, and leaders" },
+  { href: "/admin/content/sermons", label: "Sermons", description: "Sermon titles, speakers, videos, and notes" },
+  { href: "/admin/content/rentals", label: "Hall Rentals", description: "Rental halls, capacity, rates, and amenities" },
+  { href: "/admin/content/blog", label: "Blog Posts", description: "Blog articles, authors, and categories" },
+  { href: "/admin/content/events", label: "Events", description: "Upcoming events, dates, times, and locations" },
+  { href: "/admin/content/live", label: "Live Stream", description: "YouTube & Facebook live stream settings" },
 ];
 
 export default function ContentOverview() {

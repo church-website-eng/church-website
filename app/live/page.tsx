@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Card from "@/components/ui/Card";
 import { FiClock, FiYoutube, FiFacebook } from "react-icons/fi";
 import { getContent } from "@/lib/content";
@@ -163,12 +164,12 @@ export default async function LivePage() {
                 All our services are recorded and available on demand. Visit our
                 Sermons page to watch past services at any time.
               </p>
-              <a
+              <Link
                 href="/sermons"
                 className="text-sm font-medium text-accent hover:underline"
               >
                 Browse Sermon Archive &rarr;
-              </a>
+              </Link>
             </Card>
           </div>
         </div>
