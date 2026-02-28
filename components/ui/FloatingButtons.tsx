@@ -27,7 +27,7 @@ export default function FloatingButtons() {
 
       {/* WhatsApp */}
       <a
-        href="https://wa.me/?text=Hello%2C%20I%20would%20like%20to%20inquire%20about%20Goshen%20Cathedral."
+        href="https://wa.me/16472069968?text=Hello%2C%20I%20would%20like%20to%20inquire%20about%20Goshen%20Cathedral."
         target="_blank"
         rel="noopener noreferrer"
         className="flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-all duration-300 hover:scale-110"
