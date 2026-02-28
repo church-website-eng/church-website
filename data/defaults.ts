@@ -102,6 +102,11 @@ export const defaultAbout = {
     "Goshen Cathedral, Ayo Mother Parish, stands as the National Headquarter of the Arch Diocese of Canada, serving as a beacon of faith, prayer, and spiritual renewal for CCC members across the nation. Our parish is dedicated to upholding the tenets, doctrines, and divine instructions that define the Celestial Church of Christ worldwide.",
     "As a Celestial family in Canada, we continue to proclaim the gospel of Jesus Christ, worship in the power of the Holy Spirit, and extend the love of God to our community and beyond.",
   ],
+  leadership: [
+    { id: "1", name: "VSE Kunle Lawal", title: "Shepherd-in-Charge — Goshen Cathedral", bio: "Leading the Goshen Cathedral parish with divine guidance, pastoral care, and an unwavering commitment to the spiritual growth of all members. Serving as the shepherd of the Arch Diocese of Canada, National Headquarter.", photo: "/images/head-of-church.jpeg" },
+    { id: "2", name: "Church Secretary", title: "Church Secretary", bio: "Managing parish administration, communications, and record-keeping to ensure the smooth operation of Goshen Cathedral.", photo: "" },
+    { id: "3", name: "Mother-in-Celestial", title: "Mother-in-Celestial", bio: "Guiding the women's fellowship, prayer ministries, and welfare activities with love and spiritual wisdom.", photo: "" },
+  ],
 };
 
 export const defaultMinistries = {

@@ -15,11 +15,12 @@ export default async function AboutPage() {
     getContent("about", defaultAbout),
   ]);
 
-  const clergy = staff.length > 0 ? staff : [
-    { id: "1", name: "VSE Kunle Lawal", title: "Shepherd-in-Charge — Goshen Cathedral", bio: "Leading the Goshen Cathedral parish with divine guidance, pastoral care, and an unwavering commitment to the spiritual growth of all members. Serving as the shepherd of the Arch Diocese of Canada, National Headquarter.", photo: "/images/head-of-church.jpeg", email: undefined },
-    { id: "2", name: "Church Secretary", title: "Church Secretary", bio: "Managing parish administration, communications, and record-keeping to ensure the smooth operation of Goshen Cathedral.", photo: undefined, email: undefined },
-    { id: "3", name: "Mother-in-Celestial", title: "Mother-in-Celestial", bio: "Guiding the women's fellowship, prayer ministries, and welfare activities with love and spiritual wisdom.", photo: undefined, email: undefined },
-  ];
+  // Use leadership from DB content first, then Contentful staff, then defaults
+  const clergy = about.leadership && about.leadership.length > 0
+    ? about.leadership
+    : staff.length > 0
+      ? staff.map((s) => ({ id: s.id, name: s.name, title: s.title, bio: s.bio, photo: s.photo || "" }))
+      : defaultAbout.leadership;
 
   return (
     <>

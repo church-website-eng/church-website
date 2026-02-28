@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
+import { FiPlus, FiTrash2 } from "react-icons/fi";
 import { defaultAbout } from "@/data/defaults";
 
 type AboutData = typeof defaultAbout;
@@ -15,7 +16,11 @@ export default function EditAbout() {
   useEffect(() => {
     fetch("/api/admin/content/about")
       .then((r) => r.json())
-      .then((res) => { if (res.value) setData(res.value); })
+      .then((res) => {
+        if (res.value) {
+          setData({ ...defaultAbout, ...res.value });
+        }
+      })
       .catch(() => {});
   }, []);
 
@@ -60,12 +65,101 @@ export default function EditAbout() {
     setData({ ...data, historyParagraphs: data.historyParagraphs.filter((_, i) => i !== index) });
   };
 
+  const updateLeader = (index: number, field: string, value: string) => {
+    const leadership = [...data.leadership];
+    leadership[index] = { ...leadership[index], [field]: value };
+    setData({ ...data, leadership });
+  };
+
+  const addLeader = () => {
+    const id = String(Date.now());
+    setData({
+      ...data,
+      leadership: [...data.leadership, { id, name: "", title: "", bio: "", photo: "" }],
+    });
+  };
+
+  const removeLeader = (index: number) => {
+    if (confirm("Remove this leader?")) {
+      setData({ ...data, leadership: data.leadership.filter((_, i) => i !== index) });
+    }
+  };
+
   return (
     <div>
       <h1 className="mb-6 font-serif text-2xl font-bold text-primary">
         Edit About Page
       </h1>
-      <div className="max-w-2xl space-y-6">
+      <div className="max-w-2xl space-y-8">
+        {/* Leadership */}
+        <div>
+          <div className="mb-3 flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-foreground">Our Leadership</h2>
+            <button
+              onClick={addLeader}
+              className="flex items-center gap-1 rounded-lg bg-accent px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-accent-light"
+            >
+              <FiPlus size={12} /> Add Leader
+            </button>
+          </div>
+          <div className="space-y-3">
+            {data.leadership.map((leader, i) => (
+              <Card key={leader.id} className="p-4 space-y-3">
+                <div className="flex items-center justify-between">
+                  <label className="text-sm font-medium text-muted">
+                    {leader.name || `Leader ${i + 1}`}
+                  </label>
+                  <button
+                    onClick={() => removeLeader(i)}
+                    className="flex items-center gap-1 text-xs text-destructive hover:underline"
+                  >
+                    <FiTrash2 size={12} /> Remove
+                  </button>
+                </div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div>
+                    <label className="mb-1 block text-xs font-medium text-muted">Name</label>
+                    <input
+                      value={leader.name}
+                      onChange={(e) => updateLeader(i, "name", e.target.value)}
+                      placeholder="e.g. VSE Kunle Lawal"
+                      className="w-full rounded-lg border border-border bg-white px-4 py-2.5 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+                    />
+                  </div>
+                  <div>
+                    <label className="mb-1 block text-xs font-medium text-muted">Title / Role</label>
+                    <input
+                      value={leader.title}
+                      onChange={(e) => updateLeader(i, "title", e.target.value)}
+                      placeholder="e.g. Shepherd-in-Charge"
+                      className="w-full rounded-lg border border-border bg-white px-4 py-2.5 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="mb-1 block text-xs font-medium text-muted">Bio</label>
+                  <textarea
+                    rows={2}
+                    value={leader.bio}
+                    onChange={(e) => updateLeader(i, "bio", e.target.value)}
+                    placeholder="Short biography..."
+                    className="w-full rounded-lg border border-border bg-white px-4 py-2.5 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-xs font-medium text-muted">Photo URL (optional)</label>
+                  <input
+                    value={leader.photo}
+                    onChange={(e) => updateLeader(i, "photo", e.target.value)}
+                    placeholder="/images/photo.jpeg or upload via Media Library"
+                    className="w-full rounded-lg border border-border bg-white px-4 py-2.5 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+                  />
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+
         {/* History */}
         <div>
           <h2 className="mb-3 text-lg font-semibold text-foreground">Our History</h2>
