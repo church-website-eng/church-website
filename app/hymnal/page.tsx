@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Card from "@/components/ui/Card";
 import { FiSearch, FiMusic, FiChevronDown, FiChevronUp } from "react-icons/fi";
 
@@ -12,9 +13,13 @@ interface Hymn {
 }
 
 export default function HymnalPage() {
+  const searchParams = useSearchParams();
+  const initialSearch = searchParams.get("search") || "";
   const [hymns, setHymns] = useState<Hymn[]>([]);
-  const [search, setSearch] = useState("");
-  const [expanded, setExpanded] = useState<number | null>(null);
+  const [search, setSearch] = useState(initialSearch);
+  const [expanded, setExpanded] = useState<number | null>(
+    initialSearch ? Number(initialSearch) || null : null,
+  );
   const [page, setPage] = useState(1);
   const perPage = 50;
 

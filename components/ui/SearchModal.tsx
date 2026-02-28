@@ -90,7 +90,7 @@ export default function SearchModal() {
           for (const h of hymns.slice(0, 5)) {
             matched.push({
               title: `#${h.number} — ${h.title}`,
-              href: `/hymnal/${h.number}`,
+              href: `/hymnal?search=${h.number}`,
               type: "Hymn",
               snippet: h.firstLine,
             });
