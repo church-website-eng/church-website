@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { FiFacebook, FiYoutube, FiInstagram, FiMail } from "react-icons/fi";
+import { FiFacebook, FiYoutube, FiInstagram, FiMail, FiMusic } from "react-icons/fi";
 import { getContent } from "@/lib/content";
 import { defaultChurchInfo, defaultServiceTimes } from "@/data/defaults";
 
@@ -14,6 +14,7 @@ export default async function Footer() {
     { href: churchInfo.facebookUrl, icon: <FiFacebook size={20} />, label: "Facebook" },
     { href: churchInfo.youtubeUrl, icon: <FiYoutube size={20} />, label: "YouTube" },
     { href: churchInfo.instagramUrl, icon: <FiInstagram size={20} />, label: "Instagram" },
+    { href: (churchInfo as typeof churchInfo & { audiomackUrl?: string }).audiomackUrl, icon: <FiMusic size={20} />, label: "Audiomack" },
     { href: churchInfo.email ? `mailto:${churchInfo.email}` : "", icon: <FiMail size={20} />, label: "Email" },
   ];
 
@@ -23,8 +24,8 @@ export default async function Footer() {
         {/* Church info */}
         <div>
           <div className="mb-3 flex items-center gap-3">
-            <Image
-              src="/images/logo.jpeg"
+            <img
+              src={(churchInfo as typeof churchInfo & { logoUrl?: string }).logoUrl || "/images/logo.jpeg"}
               alt="CCC Logo"
               width={40}
               height={40}

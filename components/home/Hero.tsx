@@ -16,11 +16,11 @@ export default function Hero({ churchInfo }: { churchInfo?: ChurchInfo }) {
         className="object-cover"
         priority
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/70 to-primary/90" />
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/60 via-primary/50 to-primary/70" />
 
       <div className="relative z-10 mx-auto max-w-4xl px-4 text-center">
-        <Image
-          src="/images/logo.jpeg"
+        <img
+          src={(info as ChurchInfo & { logoUrl?: string }).logoUrl || "/images/logo.jpeg"}
           alt={`${info.churchName} Logo`}
           width={140}
           height={140}
@@ -34,6 +34,9 @@ export default function Hero({ churchInfo }: { churchInfo?: ChurchInfo }) {
         </p>
         <p className="animate-fade-in-up delay-300 mb-2 text-sm text-white/70">
           {info.subtitle}
+        </p>
+        <p className="animate-fade-in-up delay-400 mb-2 text-sm text-white/70">
+          {info.street}, {info.city}, {info.province}
         </p>
         <p className="animate-fade-in-up delay-500 mx-auto mb-8 mt-4 max-w-2xl text-base text-white/80 md:text-lg">
           {info.motto}

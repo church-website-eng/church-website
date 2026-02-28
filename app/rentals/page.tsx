@@ -79,7 +79,7 @@ export default function RentalsPage() {
     <>
       <section className="bg-primary py-20 text-center text-white">
         <h1 className="font-serif text-4xl font-bold md:text-5xl">
-          Hall Rentals
+          Facility Rentals
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-white/70">
           Beautiful, affordable spaces for your next event at Goshen Cathedral

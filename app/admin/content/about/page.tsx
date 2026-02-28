@@ -91,6 +91,20 @@ export default function EditAbout() {
         Edit About Page
       </h1>
       <div className="max-w-2xl space-y-8">
+        {/* Page Photo */}
+        <Card className="p-6 space-y-3">
+          <h2 className="text-lg font-semibold text-foreground">Page Photo</h2>
+          <div>
+            <label className="mb-1 block text-sm font-medium text-muted">Photo URL (paste from Media Library)</label>
+            <input
+              value={(data as AboutData & { pagePhoto?: string }).pagePhoto || ""}
+              onChange={(e) => setData({ ...data, pagePhoto: e.target.value } as AboutData)}
+              placeholder="/images/church-building.png or paste URL"
+              className="w-full rounded-lg border border-border bg-white px-4 py-2.5 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+            />
+          </div>
+        </Card>
+
         {/* Leadership */}
         <div>
           <div className="mb-3 flex items-center justify-between">

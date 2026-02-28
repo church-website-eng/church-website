@@ -30,7 +30,8 @@ const mainLinks = [
       { label: "Gallery", href: "/gallery" },
     ],
   },
-  { label: "Hall Rentals", href: "/rentals" },
+  { label: "Shepherd's Corner", href: "/shepherd" },
+  { label: "Facility Rentals", href: "/rentals" },
   { label: "Announcements", href: "/announcements" },
   { label: "Contact", href: "/contact" },
 ];
@@ -48,7 +49,8 @@ const mobileLinks = [
   { label: "Announcements", href: "/announcements" },
   { label: "Blog", href: "/blog" },
   { label: "Gallery", href: "/gallery" },
-  { label: "Hall Rentals", href: "/rentals" },
+  { label: "Shepherd's Corner", href: "/shepherd" },
+  { label: "Facility Rentals", href: "/rentals" },
   { label: "Sacraments", href: "/sacraments" },
   { label: "Plan Your Visit", href: "/visit" },
   { label: "Contact", href: "/contact" },
@@ -59,6 +61,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [dropdown, setDropdown] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [logoUrl, setLogoUrl] = useState("/images/logo.jpeg");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -66,13 +69,20 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    fetch("/api/content/church_info")
+      .then((r) => r.json())
+      .then((res) => { if (res.value?.logoUrl) setLogoUrl(res.value.logoUrl); })
+      .catch(() => {});
+  }, []);
+
   return (
     <header className={`sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur transition-shadow duration-300 ${scrolled ? "shadow-md" : ""}`}>
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3">
-          <Image
-            src="/images/logo.jpeg"
+          <img
+            src={logoUrl}
             alt="CCC Logo"
             width={46}
             height={46}

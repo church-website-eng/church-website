@@ -59,7 +59,28 @@ export default function EditChurchInfo() {
         Edit Church Info
       </h1>
       <Card className="max-w-2xl space-y-4 p-6">
-        <h2 className="font-semibold text-foreground">Identity</h2>
+        <h2 className="font-semibold text-foreground">Logo</h2>
+        <div>
+          <label className="mb-1 block text-sm font-medium text-foreground">Logo URL (paste from Media Library)</label>
+          <div className="flex items-center gap-4">
+            {(data as ChurchInfo & { logoUrl?: string }).logoUrl && (
+              <img
+                src={(data as ChurchInfo & { logoUrl?: string }).logoUrl}
+                alt="Logo preview"
+                className="h-16 w-16 rounded-full object-cover border border-border"
+              />
+            )}
+            <input
+              value={(data as ChurchInfo & { logoUrl?: string }).logoUrl || ""}
+              onChange={(e) => setData({ ...data, logoUrl: e.target.value } as ChurchInfo)}
+              placeholder="/images/logo.jpeg or paste URL from Media Library"
+              className="flex-1 rounded-lg border border-border bg-white px-4 py-2.5 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+            />
+          </div>
+          <p className="mt-1 text-xs text-muted">Upload a new logo via Media Library, then paste the URL here</p>
+        </div>
+
+        <h2 className="mt-4 font-semibold text-foreground">Identity</h2>
         {field("Church Name", "churchName")}
         {field("Cathedral Name", "cathedralName")}
         {field("Subtitle", "subtitle")}
@@ -78,6 +99,7 @@ export default function EditChurchInfo() {
         {field("Facebook URL", "facebookUrl")}
         {field("YouTube URL", "youtubeUrl")}
         {field("Instagram URL", "instagramUrl")}
+        {field("Audiomack URL", "audiomackUrl")}
 
         <div className="flex items-center gap-3 pt-4">
           <Button variant="accent" onClick={handleSave} disabled={saving}>

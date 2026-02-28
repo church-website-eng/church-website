@@ -20,8 +20,8 @@ export async function POST(req: Request) {
     });
 
     await sendNotification(
-      `Hall Rental Inquiry — ${hall}`,
-      `<h2>New Hall Rental Inquiry</h2>
+      `Facility Rental Inquiry — ${hall}`,
+      `<h2>New Facility Rental Inquiry</h2>
       <p><strong>Name:</strong> ${name}</p>
       <p><strong>Email:</strong> ${email}</p>
       <p><strong>Phone:</strong> ${phone || "Not provided"}</p>

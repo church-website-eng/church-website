@@ -54,7 +54,7 @@ export default function PrivacyPolicyPage() {
                 subscribe to our newsletter.
               </li>
               <li>
-                <strong>Hall Rental Inquiries:</strong> Name, contact details, and
+                <strong>Facility Rental Inquiries:</strong> Name, contact details, and
                 event information for rental requests.
               </li>
               <li>

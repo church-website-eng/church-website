@@ -1,4 +1,5 @@
 import { getBlogPostBySlug } from "@/lib/contentful";
+import { getContent } from "@/lib/content";
 import { placeholderPosts } from "@/data/blog";
 import { formatDate } from "@/lib/utils";
 import Button from "@/components/ui/Button";
@@ -9,12 +10,23 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
+function getEmbedUrl(url: string) {
+  const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
+  if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}`;
+  return url;
+}
+
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
-  const post = await getBlogPostBySlug(slug);
 
+  const [post, dbData] = await Promise.all([
+    getBlogPostBySlug(slug),
+    getContent("blog", { posts: [] as Array<{ id: string; title: string; author: string; date: string; slug: string; category: string; excerpt: string; body: string; imageUrl?: string; videoUrl?: string }> }),
+  ]);
+
+  const dbPost = (dbData.posts || []).find((p: { slug: string }) => p.slug === slug) as { title: string; author: string; date: string; body: string; category: string; imageUrl?: string; videoUrl?: string } | undefined;
   const placeholder = placeholderPosts.find((p) => p.slug === slug);
-  const data = post || placeholder || {
+  const data = dbPost || post || placeholder || {
     title: slug
       .split("-")
       .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
@@ -26,6 +38,9 @@ export default async function BlogPostPage({ params }: Props) {
   };
 
   if (!data) notFound();
+
+  const imageUrl = (data as { imageUrl?: string }).imageUrl;
+  const videoUrl = (data as { videoUrl?: string }).videoUrl;
 
   return (
     <>
@@ -45,8 +60,30 @@ export default async function BlogPostPage({ params }: Props) {
 
       <section className="py-12">
         <div className="mx-auto max-w-3xl px-4">
+          {imageUrl && (
+            <img
+              src={imageUrl}
+              alt={data.title}
+              className="mb-8 w-full rounded-2xl object-cover shadow-lg"
+            />
+          )}
+
+          {videoUrl && (
+            <div className="mb-8 overflow-hidden rounded-2xl shadow-lg">
+              <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+                <iframe
+                  src={getEmbedUrl(videoUrl)}
+                  className="absolute inset-0 h-full w-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  title={data.title}
+                />
+              </div>
+            </div>
+          )}
+
           <article className="max-w-none space-y-4 text-foreground/80 leading-relaxed">
-            {data.body.split("\n\n").map((paragraph, i) => (
+            {data.body.split("\n\n").map((paragraph: string, i: number) => (
               <p key={i}>{paragraph}</p>
             ))}
           </article>

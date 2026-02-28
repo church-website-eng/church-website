@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Hall Rentals",
+  title: "Facility Rentals",
   description:
-    "Rent our main hall or meeting room at Goshen Cathedral, Peterborough. Affordable, accessible spaces for weddings, receptions, meetings, and community events.",
+    "Rent our facilities at Goshen Cathedral, Peterborough. Affordable, accessible spaces for weddings, receptions, meetings, and community events.",
 };
 
 export default function RentalsLayout({ children }: { children: React.ReactNode }) {

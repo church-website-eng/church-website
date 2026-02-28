@@ -4,34 +4,64 @@ import { useState, useEffect } from "react";
 import Card from "@/components/ui/Card";
 import { FiCopy, FiCheck, FiHeart, FiDollarSign, FiSend } from "react-icons/fi";
 
-const funds = ["General Tithe", "Building Fund", "Missions & Evangelism", "Youth Ministry", "Welfare & Outreach"];
-const presetAmounts = [25, 50, 100, 250];
+interface Fund {
+  name: string;
+  email: string;
+}
+
+interface GiveSettings {
+  funds: Fund[];
+  presetAmounts: number[];
+  headerQuote: string;
+  autoDepositEnabled: boolean;
+  taxDeductible: boolean;
+}
+
+const defaultSettings: GiveSettings = {
+  funds: [
+    { name: "General Tithe", email: "info@cccgoshencathedral.ca" },
+    { name: "Building Fund", email: "info@cccgoshencathedral.ca" },
+    { name: "Missions & Evangelism", email: "info@cccgoshencathedral.ca" },
+    { name: "Youth Ministry", email: "info@cccgoshencathedral.ca" },
+    { name: "Welfare & Outreach", email: "info@cccgoshencathedral.ca" },
+    { name: "Thanksgiving Offering", email: "info@cccgoshencathedral.ca" },
+    { name: "Special Seed / Harvest", email: "info@cccgoshencathedral.ca" },
+    { name: "Other Donations", email: "info@cccgoshencathedral.ca" },
+  ],
+  presetAmounts: [25, 50, 100, 250],
+  headerQuote: "Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver.",
+  autoDepositEnabled: true,
+  taxDeductible: true,
+};
 
 export default function GivePage() {
+  const [settings, setSettings] = useState<GiveSettings>(defaultSettings);
   const [amount, setAmount] = useState<number | "">("");
   const [customAmount, setCustomAmount] = useState("");
-  const [fund, setFund] = useState(funds[0]);
+  const [selectedFund, setSelectedFund] = useState(0);
   const [copied, setCopied] = useState(false);
-  const [email, setEmail] = useState("info@cccgoshencathedral.ca");
 
   useEffect(() => {
-    fetch("/api/content/church_info")
+    fetch("/api/content/give")
       .then((r) => r.json())
       .then((res) => {
-        if (res.value?.email) setEmail(res.value.email);
+        if (res.value) {
+          setSettings({ ...defaultSettings, ...res.value });
+        }
       })
       .catch(() => {});
   }, []);
 
+  const currentFund = settings.funds[selectedFund] || settings.funds[0];
   const displayAmount = amount || Number(customAmount) || 0;
 
   const copyEmail = async () => {
-    await navigator.clipboard.writeText(email);
+    await navigator.clipboard.writeText(currentFund.email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const suggestedMessage = `${fund}${displayAmount ? ` - $${displayAmount}` : ""}`;
+  const suggestedMessage = `${currentFund.name}${displayAmount ? ` - $${displayAmount}` : ""}`;
 
   return (
     <>
@@ -40,9 +70,7 @@ export default function GivePage() {
           Give Online
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-white/70">
-          &ldquo;Each of you should give what you have decided in your heart to
-          give, not reluctantly or under compulsion, for God loves a cheerful
-          giver.&rdquo; &mdash; 2 Corinthians 9:7
+          &ldquo;{settings.headerQuote}&rdquo; &mdash; 2 Corinthians 9:7
         </p>
         <p className="mx-auto mt-2 max-w-2xl text-sm text-white/50">
           Celestial Church of Christ &mdash; Goshen Cathedral
@@ -51,7 +79,6 @@ export default function GivePage() {
 
       <section className="py-16">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          {/* Interac e-Transfer card */}
           <Card className="p-8">
             <div className="mb-6 text-center">
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gold/10">
@@ -65,13 +92,39 @@ export default function GivePage() {
               </p>
             </div>
 
+            {/* Fund designation */}
+            <div className="mb-6">
+              <label className="mb-3 block text-sm font-semibold text-primary">
+                Select Fund
+              </label>
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                {settings.funds.map((f, i) => (
+                  <button
+                    key={i}
+                    onClick={() => { setSelectedFund(i); setCopied(false); }}
+                    className={`rounded-lg border-2 px-4 py-3 text-left text-sm font-medium transition-all duration-200 ${
+                      selectedFund === i
+                        ? "border-gold bg-gold/10 text-primary"
+                        : "border-border text-foreground/70 hover:border-gold/50"
+                    }`}
+                  >
+                    <span className="block font-semibold">{f.name}</span>
+                    <span className="block text-xs text-muted mt-0.5">{f.email}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Email to send to */}
             <div className="mb-8 rounded-xl border-2 border-gold/30 bg-gold/5 p-5 text-center">
               <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-muted">
                 Send e-Transfer to
               </p>
-              <p className="mb-3 text-lg font-bold text-primary break-all">
-                {email}
+              <p className="mb-1 text-lg font-bold text-primary break-all">
+                {currentFund.email}
+              </p>
+              <p className="mb-3 text-xs text-muted">
+                for <strong>{currentFund.name}</strong>
               </p>
               <button
                 onClick={copyEmail}
@@ -96,7 +149,7 @@ export default function GivePage() {
                 Amount (for your reference)
               </label>
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                {presetAmounts.map((a) => (
+                {settings.presetAmounts.map((a) => (
                   <button
                     key={a}
                     onClick={() => {
@@ -128,24 +181,6 @@ export default function GivePage() {
               </div>
             </div>
 
-            {/* Fund designation */}
-            <div className="mb-6">
-              <label className="mb-3 block text-sm font-semibold text-primary">
-                Designate to Fund
-              </label>
-              <select
-                value={fund}
-                onChange={(e) => setFund(e.target.value)}
-                className="w-full rounded-lg border border-border bg-white px-4 py-2.5 text-sm focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
-              >
-                {funds.map((f) => (
-                  <option key={f} value={f}>
-                    {f}
-                  </option>
-                ))}
-              </select>
-            </div>
-
             {/* Suggested message */}
             <div className="mb-8 rounded-lg bg-muted-light p-4">
               <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-muted">
@@ -165,31 +200,39 @@ export default function GivePage() {
               <ol className="space-y-3 text-sm text-foreground/70">
                 <li className="flex gap-3">
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gold/10 text-xs font-bold text-gold">1</span>
-                  Open your banking app and select <strong className="text-foreground">Interac e-Transfer</strong>
+                  Select the <strong className="text-foreground">fund</strong> you want to donate to above
                 </li>
                 <li className="flex gap-3">
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gold/10 text-xs font-bold text-gold">2</span>
-                  Add the recipient email: <strong className="text-foreground break-all">{email}</strong>
+                  Open your banking app and select <strong className="text-foreground">Interac e-Transfer</strong>
                 </li>
                 <li className="flex gap-3">
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gold/10 text-xs font-bold text-gold">3</span>
-                  Enter the amount and add the fund name in the <strong className="text-foreground">Message</strong> field
+                  Add the recipient email: <strong className="text-foreground break-all">{currentFund.email}</strong>
                 </li>
                 <li className="flex gap-3">
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gold/10 text-xs font-bold text-gold">4</span>
-                  Send! Auto-deposit is enabled &mdash; no security question needed
+                  Enter the amount and add the fund name in the <strong className="text-foreground">Message</strong> field
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gold/10 text-xs font-bold text-gold">5</span>
+                  Send!{settings.autoDepositEnabled && " Auto-deposit is enabled \u2014 no security question needed"}
                 </li>
               </ol>
             </div>
 
             {/* Badges */}
             <div className="flex items-center justify-center gap-6 border-t border-border pt-5 text-xs text-muted">
-              <span className="flex items-center gap-1.5">
-                <FiHeart size={14} className="text-accent" /> Tax Deductible
-              </span>
-              <span className="flex items-center gap-1.5">
-                <FiSend size={14} className="text-gold" /> Auto-Deposit Enabled
-              </span>
+              {settings.taxDeductible && (
+                <span className="flex items-center gap-1.5">
+                  <FiHeart size={14} className="text-accent" /> Tax Deductible
+                </span>
+              )}
+              {settings.autoDepositEnabled && (
+                <span className="flex items-center gap-1.5">
+                  <FiSend size={14} className="text-gold" /> Auto-Deposit Enabled
+                </span>
+              )}
             </div>
           </Card>
 

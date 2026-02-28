@@ -11,11 +11,16 @@ const editors = [
   { href: "/admin/content/about", label: "About Page", description: "Church history, beliefs, and leadership" },
   { href: "/admin/content/ministries", label: "Ministries", description: "Ministry names, descriptions, and leaders" },
   { href: "/admin/content/sermons", label: "Sermons", description: "Sermon titles, speakers, videos, and notes" },
-  { href: "/admin/content/rentals", label: "Hall Rentals", description: "Rental halls, capacity, rates, and amenities" },
+  { href: "/admin/content/rentals", label: "Facility Rentals", description: "Rental facilities, capacity, rates, and amenities" },
   { href: "/admin/content/blog", label: "Blog Posts", description: "Blog articles, authors, and categories" },
   { href: "/admin/content/events", label: "Events", description: "Upcoming events, dates, times, and locations" },
   { href: "/admin/content/hymnal", label: "Hymnal", description: "CCC hymns — English, Yoruba, and tonic solfa" },
   { href: "/admin/content/live", label: "Live Stream", description: "YouTube & Facebook live stream settings" },
+  { href: "/admin/content/gallery", label: "Gallery", description: "Photo albums and gallery images" },
+  { href: "/admin/content/character", label: "Character of the Week", description: "Featured Bible character with name, title, verse, and description" },
+  { href: "/admin/content/give", label: "Give / Donate", description: "Donation funds, per-fund e-Transfer emails, and preset amounts" },
+  { href: "/admin/content/shepherd", label: "Shepherd's Corner", description: "Shepherd's photo, bio, weekly message, and video" },
+  { href: "/admin/content/theme", label: "Theme & Appearance", description: "Customize fonts, font size, and website colors" },
 ];
 
 export default function ContentOverview() {

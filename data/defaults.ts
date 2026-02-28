@@ -11,6 +11,8 @@ export const defaultChurchInfo = {
   facebookUrl: "https://www.facebook.com/celestialchurchofchristayomotherparish",
   youtubeUrl: "https://www.youtube.com/watch?v=LkVAqyR1088",
   instagramUrl: "https://www.instagram.com/celestialchurchcanadahq/",
+  audiomackUrl: "",
+  logoUrl: "/images/logo.jpeg",
 };
 
 export const defaultServiceTimes = {
@@ -107,6 +109,52 @@ export const defaultAbout = {
     { id: "2", name: "Church Secretary", title: "Church Secretary", bio: "Managing parish administration, communications, and record-keeping to ensure the smooth operation of Goshen Cathedral.", photo: "" },
     { id: "3", name: "Mother-in-Celestial", title: "Mother-in-Celestial", bio: "Guiding the women's fellowship, prayer ministries, and welfare activities with love and spiritual wisdom.", photo: "" },
   ],
+};
+
+export const defaultGiveSettings = {
+  funds: [
+    { name: "General Tithe", email: "info@cccgoshencathedral.ca" },
+    { name: "Building Fund", email: "info@cccgoshencathedral.ca" },
+    { name: "Missions & Evangelism", email: "info@cccgoshencathedral.ca" },
+    { name: "Youth Ministry", email: "info@cccgoshencathedral.ca" },
+    { name: "Welfare & Outreach", email: "info@cccgoshencathedral.ca" },
+    { name: "Thanksgiving Offering", email: "info@cccgoshencathedral.ca" },
+    { name: "Special Seed / Harvest", email: "info@cccgoshencathedral.ca" },
+    { name: "Other Donations", email: "info@cccgoshencathedral.ca" },
+  ],
+  presetAmounts: [25, 50, 100, 250],
+  headerQuote:
+    "Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver.",
+  autoDepositEnabled: true,
+  taxDeductible: true,
+};
+
+export const defaultShepherdCorner = {
+  name: "VSE Kunle Lawal",
+  title: "Shepherd-in-Charge — Goshen Cathedral",
+  bio: "Leading the Goshen Cathedral parish with divine guidance, pastoral care, and an unwavering commitment to the spiritual growth of all members.",
+  photo: "/images/head-of-church.jpeg",
+  messageTitle: "A Word from the Shepherd",
+  messageBody: "Beloved in Christ, let us continue to walk in faith, love, and obedience to God's word. Remember that our strength comes from the Lord, and in every season, He remains faithful. Stay prayerful, stay connected, and let the light of Christ shine through you.",
+  videoUrl: "",
+};
+
+export const defaultCharacterOfWeek = {
+  name: "Onesimus",
+  title: "The Faithful Servant",
+  verse: "Philemon 1:10-11",
+  description:
+    "Once a runaway slave, Onesimus became a faithful servant of Christ through Paul's ministry. His transformation shows that no one is beyond God's redemptive power.",
+  imageUrl: "",
+};
+
+export const defaultThemeSettings = {
+  fontSerif: "Georgia",
+  fontSans: "system-ui",
+  fontSize: "default",
+  primaryColor: "#1a237e",
+  accentColor: "#c62828",
+  goldColor: "#d4a017",
 };
 
 export const defaultMinistries = {

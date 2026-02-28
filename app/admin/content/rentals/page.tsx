@@ -66,7 +66,7 @@ export default function EditRentals() {
   };
 
   const removeHall = (index: number) => {
-    if (confirm("Remove this hall?")) {
+    if (confirm("Remove this facility?")) {
       setHalls(halls.filter((_, i) => i !== index));
     }
   };
@@ -74,21 +74,21 @@ export default function EditRentals() {
   return (
     <div>
       <h1 className="mb-6 font-serif text-2xl font-bold text-primary">
-        Edit Hall Rentals
+        Edit Facility Rentals
       </h1>
 
       <div className="space-y-6">
         {halls.map((hall, i) => (
           <Card key={i} className="max-w-2xl space-y-4 p-6">
             <div className="flex items-center justify-between">
-              <h2 className="font-semibold text-foreground">Hall #{i + 1}</h2>
+              <h2 className="font-semibold text-foreground">Facility #{i + 1}</h2>
               <button onClick={() => removeHall(i)} className="text-sm text-destructive hover:underline flex items-center gap-1">
                 <FiTrash2 size={14} /> Remove
               </button>
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium">Hall Name</label>
+              <label className="mb-1 block text-sm font-medium">Facility Name</label>
               <input
                 value={hall.name}
                 onChange={(e) => updateHall(i, "name", e.target.value)}
@@ -144,7 +144,7 @@ export default function EditRentals() {
         onClick={addHall}
         className="mt-4 flex items-center gap-2 rounded-lg border border-dashed border-border px-4 py-2 text-sm text-muted transition hover:border-accent hover:text-accent"
       >
-        <FiPlus size={14} /> Add Another Hall
+        <FiPlus size={14} /> Add Another Facility
       </button>
 
       <div className="mt-6 flex items-center gap-3">

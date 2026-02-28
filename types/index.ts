@@ -16,12 +16,15 @@ export interface ChurchEvent {
   id: string;
   title: string;
   date: string;
+  time?: string;
   endDate?: string;
   location: string;
   description: string;
   slug: string;
   image?: string;
-  registrationEnabled: boolean;
+  imageUrl?: string;
+  registrationEnabled?: boolean;
+  registrationUrl?: string;
 }
 
 export interface BlogPost {

@@ -13,6 +13,8 @@ interface Event {
   location: string;
   description: string;
   slug: string;
+  imageUrl?: string;
+  registrationUrl?: string;
 }
 
 export default function EditEvents() {
@@ -135,6 +137,27 @@ export default function EditEvents() {
                 onChange={(e) => updateEvent(i, "location", e.target.value)}
                 className="w-full rounded-lg border border-border bg-white px-4 py-2.5 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
               />
+            </div>
+
+            <div>
+              <label className="mb-1 block text-sm font-medium">Image URL (paste from Media Library)</label>
+              <input
+                value={event.imageUrl || ""}
+                onChange={(e) => updateEvent(i, "imageUrl", e.target.value)}
+                placeholder="https://... (copy URL from Media Library)"
+                className="w-full rounded-lg border border-border bg-white px-4 py-2.5 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+              />
+            </div>
+
+            <div>
+              <label className="mb-1 block text-sm font-medium">Registration URL (Google Form, Eventbrite, etc.)</label>
+              <input
+                value={event.registrationUrl || ""}
+                onChange={(e) => updateEvent(i, "registrationUrl", e.target.value)}
+                placeholder="https://forms.gle/... or leave blank for no registration"
+                className="w-full rounded-lg border border-border bg-white px-4 py-2.5 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+              />
+              <p className="mt-1 text-xs text-muted">Paste a Google Form or registration link. A &quot;Register&quot; button will appear on the event page.</p>
             </div>
 
             <div>

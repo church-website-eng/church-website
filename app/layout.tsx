@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import FloatingButtons from "@/components/ui/FloatingButtons";
+import ThemeInjector from "@/components/layout/ThemeInjector";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -99,6 +100,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ThemeInjector />
         <Navbar />
         <main className="min-h-screen">{children}</main>
         <Footer />

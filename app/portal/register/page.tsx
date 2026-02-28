@@ -5,16 +5,27 @@ import Link from "next/link";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 
+const months = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+
 export default function RegisterPage() {
   const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
+    birthMonth: "",
+    birthDay: "",
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const daysInMonth = form.birthMonth
+    ? new Date(2000, Number(form.birthMonth), 0).getDate()
+    : 31;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,6 +51,8 @@ export default function RegisterPage() {
           name: form.name,
           email: form.email,
           password: form.password,
+          birthMonth: form.birthMonth ? Number(form.birthMonth) : null,
+          birthDay: form.birthDay ? Number(form.birthDay) : null,
         }),
       });
 
@@ -95,10 +108,7 @@ export default function RegisterPage() {
                 )}
 
                 <div>
-                  <label
-                    htmlFor="name"
-                    className="mb-1 block text-sm font-medium text-foreground"
-                  >
+                  <label htmlFor="name" className="mb-1 block text-sm font-medium text-foreground">
                     Full Name
                   </label>
                   <input
@@ -112,10 +122,7 @@ export default function RegisterPage() {
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="email"
-                    className="mb-1 block text-sm font-medium text-foreground"
-                  >
+                  <label htmlFor="email" className="mb-1 block text-sm font-medium text-foreground">
                     Email
                   </label>
                   <input
@@ -129,10 +136,49 @@ export default function RegisterPage() {
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="password"
-                    className="mb-1 block text-sm font-medium text-foreground"
-                  >
+                  <label className="mb-1 block text-sm font-medium text-foreground">
+                    Birthday (Month &amp; Day)
+                  </label>
+                  <p className="mb-2 text-xs text-muted">
+                    We use this for birthday celebrations — year is not required
+                  </p>
+                  <div className="grid grid-cols-2 gap-3">
+                    <select
+                      value={form.birthMonth}
+                      onChange={(e) =>
+                        setForm({ ...form, birthMonth: e.target.value, birthDay: "" })
+                      }
+                      className="w-full rounded-lg border border-border bg-white px-4 py-2.5 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+                    >
+                      <option value="">Month</option>
+                      {months.map((m, i) => (
+                        <option key={m} value={i + 1}>
+                          {m}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      value={form.birthDay}
+                      onChange={(e) =>
+                        setForm({ ...form, birthDay: e.target.value })
+                      }
+                      disabled={!form.birthMonth}
+                      className="w-full rounded-lg border border-border bg-white px-4 py-2.5 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent disabled:opacity-50"
+                    >
+                      <option value="">Day</option>
+                      {Array.from({ length: daysInMonth }, (_, i) => i + 1).map(
+                        (d) => (
+                          <option key={d} value={d}>
+                            {d}
+                          </option>
+                        ),
+                      )}
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="password" className="mb-1 block text-sm font-medium text-foreground">
                     Password
                   </label>
                   <input
@@ -141,21 +187,14 @@ export default function RegisterPage() {
                     required
                     minLength={8}
                     value={form.password}
-                    onChange={(e) =>
-                      setForm({ ...form, password: e.target.value })
-                    }
+                    onChange={(e) => setForm({ ...form, password: e.target.value })}
                     className="w-full rounded-lg border border-border bg-white px-4 py-2.5 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
                   />
-                  <p className="mt-1 text-xs text-muted">
-                    Minimum 8 characters
-                  </p>
+                  <p className="mt-1 text-xs text-muted">Minimum 8 characters</p>
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="confirmPassword"
-                    className="mb-1 block text-sm font-medium text-foreground"
-                  >
+                  <label htmlFor="confirmPassword" className="mb-1 block text-sm font-medium text-foreground">
                     Confirm Password
                   </label>
                   <input
@@ -164,9 +203,7 @@ export default function RegisterPage() {
                     required
                     minLength={8}
                     value={form.confirmPassword}
-                    onChange={(e) =>
-                      setForm({ ...form, confirmPassword: e.target.value })
-                    }
+                    onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
                     className="w-full rounded-lg border border-border bg-white px-4 py-2.5 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
                   />
                 </div>
@@ -183,10 +220,7 @@ export default function RegisterPage() {
 
                 <p className="mt-4 text-center text-sm text-muted">
                   Already have an account?{" "}
-                  <Link
-                    href="/portal/login"
-                    className="text-accent hover:underline"
-                  >
+                  <Link href="/portal/login" className="text-accent hover:underline">
                     Sign in
                   </Link>
                 </p>

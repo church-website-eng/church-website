@@ -3,6 +3,7 @@ import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import { FiCalendar, FiMapPin } from "react-icons/fi";
 import { formatDate } from "@/lib/utils";
+import { getContent } from "@/lib/content";
 import type { ChurchEvent } from "@/types";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -22,8 +23,16 @@ export const metadata: Metadata = {
 };
 
 export default async function EventsPage() {
-  const events = await getEvents(20);
-  const items = events.length > 0 ? events : placeholderEvents;
+  const [contentfulEvents, dbData] = await Promise.all([
+    getEvents(20),
+    getContent("events", { events: [] } as { events: ChurchEvent[] }),
+  ]);
+
+  const items = dbData.events.length > 0
+    ? dbData.events
+    : contentfulEvents.length > 0
+      ? contentfulEvents
+      : placeholderEvents;
 
   return (
     <>
@@ -39,13 +48,13 @@ export default async function EventsPage() {
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {items.map((event) => (
               <Card key={event.id} className="flex flex-col">
-                {event.image && (
+                {(event.image || event.imageUrl) ? (
                   <img
-                    src={event.image}
+                    src={event.image || event.imageUrl}
                     alt={event.title}
                     className="mb-4 h-40 w-full rounded-lg object-cover"
                   />
-                )}
+                ) : null}
                 <h3 className="mb-2 font-serif text-lg font-bold text-primary">
                   <Link href={`/events/${event.slug}`} className="hover:underline">
                     {event.title}
@@ -62,15 +71,16 @@ export default async function EventsPage() {
                 <p className="mb-4 flex-1 text-sm text-foreground/70">
                   {event.description}
                 </p>
-                {event.registrationEnabled && (
+                {(event.registrationUrl || event.registrationEnabled) ? (
                   <Button
-                    href={`/events/${event.slug}`}
+                    href={event.registrationUrl || `/events/${event.slug}`}
                     variant="accent"
                     size="sm"
+                    target={event.registrationUrl ? "_blank" : undefined}
                   >
                     Register
                   </Button>
-                )}
+                ) : null}
               </Card>
             ))}
           </div>

@@ -10,6 +10,7 @@ interface ButtonProps {
   onClick?: () => void;
   type?: "button" | "submit";
   disabled?: boolean;
+  target?: string;
 }
 
 const base =
@@ -37,10 +38,18 @@ export default function Button({
   onClick,
   type = "button",
   disabled,
+  target,
 }: ButtonProps) {
   const classes = cn(base, variants[variant], sizes[size], disabled && "opacity-50 cursor-not-allowed", className);
 
   if (href) {
+    if (target === "_blank") {
+      return (
+        <a href={href} className={classes} target="_blank" rel="noopener noreferrer">
+          {children}
+        </a>
+      );
+    }
     return (
       <Link href={href} className={classes}>
         {children}
