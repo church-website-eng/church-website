@@ -11,13 +11,18 @@ import { getContent } from "@/lib/content";
 import { defaultChurchInfo, defaultServiceTimes, defaultStats } from "@/data/defaults";
 
 export default async function Home() {
-  const [events, sermons, churchInfo, serviceTimes, stats] = await Promise.all([
+  const [events, contentfulSermons, churchInfo, serviceTimes, stats, dbSermons] = await Promise.all([
     getEvents(3),
     getSermons(1),
     getContent("church_info", defaultChurchInfo),
     getContent("service_times", defaultServiceTimes),
     getContent("stats", defaultStats),
+    getContent("sermons", { sermons: [] } as { sermons: { id: string; title: string; speaker: string; date: string; series?: string; slug: string; videoUrl?: string }[] }),
   ]);
+
+  const latestSermon = dbSermons.sermons.length > 0
+    ? dbSermons.sermons[0]
+    : contentfulSermons[0] || null;
 
   return (
     <>
@@ -29,7 +34,7 @@ export default async function Home() {
       <Divider />
       <UpcomingEvents events={events} />
       <Divider />
-      <LatestSermon sermon={sermons[0] || null} />
+      <LatestSermon sermon={latestSermon} />
       <Divider />
       <Newsletter />
     </>

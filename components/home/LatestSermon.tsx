@@ -10,7 +10,13 @@ export default function LatestSermon({ sermon }: Props) {
   const title = sermon?.title || "Sermon by the Shepherd";
   const speaker = sermon?.speaker || "VSE Kunle Lawal";
   const date = sermon?.date ? formatDate(sermon.date) : "February 26, 2026";
-  const videoUrl = sermon?.videoUrl || "";
+  let videoUrl = sermon?.videoUrl || "";
+
+  // Convert YouTube watch URLs to embed format
+  const ytMatch = videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
+  if (ytMatch) {
+    videoUrl = `https://www.youtube.com/embed/${ytMatch[1]}`;
+  }
 
   return (
     <section className="bg-muted-light py-16">
@@ -27,24 +33,22 @@ export default function LatestSermon({ sermon }: Props) {
 
         <div className="grid items-center gap-8 lg:grid-cols-2">
           {/* Video */}
-          <div className="aspect-video overflow-hidden rounded-xl bg-black shadow-lg">
+          <div className="aspect-video overflow-hidden rounded-xl bg-primary/10 shadow-lg">
             {videoUrl ? (
               <iframe
                 src={videoUrl}
                 className="h-full w-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 title={title}
               />
             ) : (
-              <video
-                controls
-                preload="metadata"
-                className="h-full w-full"
-                poster="/images/head-of-church.jpeg"
-              >
-                <source src="/videos/sermon-shepherd.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+              <div className="flex h-full w-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-primary/20 to-primary/5">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-accent text-white shadow-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </div>
+                <p className="text-sm font-medium text-muted">Video coming soon</p>
+              </div>
             )}
           </div>
 
