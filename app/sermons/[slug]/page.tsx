@@ -42,7 +42,7 @@ export default async function SermonDetailPage({ params }: Props) {
   // Convert YouTube watch URLs to embed format
   let embedUrl = data.videoUrl || "";
   const ytMatch = embedUrl.match(
-    /(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/,
+    /(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([\w-]+)/,
   );
   if (ytMatch) {
     embedUrl = `https://www.youtube.com/embed/${ytMatch[1]}`;

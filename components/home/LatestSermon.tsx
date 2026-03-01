@@ -13,7 +13,7 @@ export default function LatestSermon({ sermon }: Props) {
   let videoUrl = sermon?.videoUrl || "";
 
   // Convert YouTube watch URLs to embed format
-  const ytMatch = videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
+  const ytMatch = videoUrl.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([\w-]+)/);
   if (ytMatch) {
     videoUrl = `https://www.youtube.com/embed/${ytMatch[1]}`;
   }
