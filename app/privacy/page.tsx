@@ -29,7 +29,7 @@ export default function PrivacyPolicyPage() {
               &ldquo;us&rdquo;, or &ldquo;our&rdquo;) is committed to
               protecting your personal information and your right to privacy. This
               Privacy Policy explains how we collect, use, disclose, and safeguard
-              your information when you visit our website goshencathedral.ca and
+              your information when you visit our website celestialchurchcanada.com and
               use our services.
             </p>
           </div>

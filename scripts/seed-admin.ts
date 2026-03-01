@@ -9,7 +9,7 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function main() {
-  const email = "admin@goshencathedral.ca";
+  const email = "admin@celestialchurchcanada.com";
   const password = "GoshenAdmin2026!";
 
   const hashed = await bcrypt.hash(password, 12);

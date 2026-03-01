@@ -146,7 +146,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-primary">Email</h3>
                     <p className="text-sm text-muted">
-                      info@cccgoshencathedral.ca
+                      shepherd@celestialchurchcanada.com
                     </p>
                   </div>
                 </div>

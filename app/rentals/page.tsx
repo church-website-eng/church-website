@@ -154,7 +154,7 @@ export default function RentalsPage() {
             </span>
             <span className="flex items-center gap-2">
               <FiMail size={16} className="text-accent" />
-              info@cccgoshencathedral.ca
+              shepherd@celestialchurchcanada.com
             </span>
           </div>
         </div>

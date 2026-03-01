@@ -19,14 +19,14 @@ interface GiveSettings {
 
 const defaultSettings: GiveSettings = {
   funds: [
-    { name: "General Tithe", email: "info@cccgoshencathedral.ca" },
-    { name: "Building Fund", email: "info@cccgoshencathedral.ca" },
-    { name: "Missions & Evangelism", email: "info@cccgoshencathedral.ca" },
-    { name: "Youth Ministry", email: "info@cccgoshencathedral.ca" },
-    { name: "Welfare & Outreach", email: "info@cccgoshencathedral.ca" },
-    { name: "Thanksgiving Offering", email: "info@cccgoshencathedral.ca" },
-    { name: "Special Seed / Harvest", email: "info@cccgoshencathedral.ca" },
-    { name: "Other Donations", email: "info@cccgoshencathedral.ca" },
+    { name: "General Tithe", email: "shepherd@celestialchurchcanada.com" },
+    { name: "Building Fund", email: "shepherd@celestialchurchcanada.com" },
+    { name: "Missions & Evangelism", email: "shepherd@celestialchurchcanada.com" },
+    { name: "Youth Ministry", email: "shepherd@celestialchurchcanada.com" },
+    { name: "Welfare & Outreach", email: "shepherd@celestialchurchcanada.com" },
+    { name: "Thanksgiving Offering", email: "shepherd@celestialchurchcanada.com" },
+    { name: "Special Seed / Harvest", email: "shepherd@celestialchurchcanada.com" },
+    { name: "Other Donations", email: "shepherd@celestialchurchcanada.com" },
   ],
   presetAmounts: [25, 50, 100, 250],
   headerQuote: "Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver.",

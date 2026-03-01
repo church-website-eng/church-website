@@ -7,7 +7,7 @@ export const defaultChurchInfo = {
   city: "Peterborough",
   province: "ON",
   phone: "",
-  email: "info@cccgoshencathedral.ca",
+  email: "shepherd@celestialchurchcanada.com",
   facebookUrl: "https://www.facebook.com/celestialchurchofchristayomotherparish",
   youtubeUrl: "https://www.youtube.com/watch?v=LkVAqyR1088",
   instagramUrl: "https://www.instagram.com/celestialchurchcanadahq/",
@@ -113,14 +113,14 @@ export const defaultAbout = {
 
 export const defaultGiveSettings = {
   funds: [
-    { name: "General Tithe", email: "info@cccgoshencathedral.ca" },
-    { name: "Building Fund", email: "info@cccgoshencathedral.ca" },
-    { name: "Missions & Evangelism", email: "info@cccgoshencathedral.ca" },
-    { name: "Youth Ministry", email: "info@cccgoshencathedral.ca" },
-    { name: "Welfare & Outreach", email: "info@cccgoshencathedral.ca" },
-    { name: "Thanksgiving Offering", email: "info@cccgoshencathedral.ca" },
-    { name: "Special Seed / Harvest", email: "info@cccgoshencathedral.ca" },
-    { name: "Other Donations", email: "info@cccgoshencathedral.ca" },
+    { name: "General Tithe", email: "shepherd@celestialchurchcanada.com" },
+    { name: "Building Fund", email: "shepherd@celestialchurchcanada.com" },
+    { name: "Missions & Evangelism", email: "shepherd@celestialchurchcanada.com" },
+    { name: "Youth Ministry", email: "shepherd@celestialchurchcanada.com" },
+    { name: "Welfare & Outreach", email: "shepherd@celestialchurchcanada.com" },
+    { name: "Thanksgiving Offering", email: "shepherd@celestialchurchcanada.com" },
+    { name: "Special Seed / Harvest", email: "shepherd@celestialchurchcanada.com" },
+    { name: "Other Donations", email: "shepherd@celestialchurchcanada.com" },
   ],
   presetAmounts: [25, 50, 100, 250],
   headerQuote:
@@ -160,9 +160,9 @@ export const defaultThemeSettings = {
 export const defaultCareers = {
   intro: "We believe every member has gifts to share. Whether you're looking to serve part-time, volunteer, or explore a career in ministry support, there are many ways to get involved at Goshen Cathedral.",
   careers: [
-    { id: "1", title: "Youth Program Coordinator", type: "volunteer", description: "Help organize and lead our youth ministry programs, events, and outreach activities.", requirements: "Experience working with youth, strong organizational skills", contact: "info@cccgoshencathedral.ca" },
-    { id: "2", title: "Media & Communications", type: "volunteer", description: "Assist with live streaming, social media, photography, and video production for church services and events.", requirements: "Familiarity with social media platforms, basic video/photo skills", contact: "info@cccgoshencathedral.ca" },
-    { id: "3", title: "Music Ministry Volunteer", type: "volunteer", description: "Join the choir or music team. Singers and instrumentalists of all levels are welcome.", requirements: "A heart for worship, willingness to attend rehearsals", contact: "info@cccgoshencathedral.ca" },
+    { id: "1", title: "Youth Program Coordinator", type: "volunteer", description: "Help organize and lead our youth ministry programs, events, and outreach activities.", requirements: "Experience working with youth, strong organizational skills", contact: "shepherd@celestialchurchcanada.com" },
+    { id: "2", title: "Media & Communications", type: "volunteer", description: "Assist with live streaming, social media, photography, and video production for church services and events.", requirements: "Familiarity with social media platforms, basic video/photo skills", contact: "shepherd@celestialchurchcanada.com" },
+    { id: "3", title: "Music Ministry Volunteer", type: "volunteer", description: "Join the choir or music team. Singers and instrumentalists of all levels are welcome.", requirements: "A heart for worship, willingness to attend rehearsals", contact: "shepherd@celestialchurchcanada.com" },
   ],
   volunteerAreas: [
     { id: "1", name: "Ushering & Hospitality", description: "Welcome visitors and members, assist during services, and ensure a warm church experience." },
