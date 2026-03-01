@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import { FiPlus, FiTrash2 } from "react-icons/fi";
+import RichTextEditor from "@/components/ui/RichTextEditor";
 
 interface BlogPost {
   id: string;
@@ -170,12 +171,11 @@ export default function EditBlog() {
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium">Body (full article — separate paragraphs with blank lines)</label>
-              <textarea
-                rows={8}
-                value={post.body}
-                onChange={(e) => updatePost(i, "body", e.target.value)}
-                className="w-full rounded-lg border border-border bg-white px-4 py-2.5 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+              <label className="mb-1 block text-sm font-medium">Body (full article)</label>
+              <RichTextEditor
+                content={post.body}
+                onChange={(html) => updatePost(i, "body", html)}
+                placeholder="Write the blog post content here..."
               />
             </div>
           </Card>

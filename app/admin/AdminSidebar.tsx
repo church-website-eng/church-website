@@ -31,6 +31,7 @@ const contentLinks = [
   { href: "/admin/content/gallery", label: "Gallery" },
   { href: "/admin/content/character", label: "Character of Week" },
   { href: "/admin/content/give", label: "Give / Donate" },
+  { href: "/admin/content/careers", label: "Careers & Volunteering" },
   { href: "/admin/content/shepherd", label: "Shepherd's Corner" },
   { href: "/admin/content/theme", label: "Theme & Appearance" },
 ];

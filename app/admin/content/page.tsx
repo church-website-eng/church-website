@@ -19,6 +19,7 @@ const editors = [
   { href: "/admin/content/gallery", label: "Gallery", description: "Photo albums and gallery images" },
   { href: "/admin/content/character", label: "Character of the Week", description: "Featured Bible character with name, title, verse, and description" },
   { href: "/admin/content/give", label: "Give / Donate", description: "Donation funds, per-fund e-Transfer emails, and preset amounts" },
+  { href: "/admin/content/careers", label: "Careers & Volunteering", description: "Job positions, volunteer areas, and opportunities to serve" },
   { href: "/admin/content/shepherd", label: "Shepherd's Corner", description: "Shepherd's photo, bio, weekly message, and video" },
   { href: "/admin/content/theme", label: "Theme & Appearance", description: "Customize fonts, font size, and website colors" },
 ];

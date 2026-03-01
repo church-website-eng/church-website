@@ -69,9 +69,10 @@ export default async function AnnouncementsPage() {
                 <h3 className="mb-2 font-serif text-lg font-bold text-primary">
                   {a.title}
                 </h3>
-                <p className="text-sm text-foreground/70 leading-relaxed">
-                  {a.body}
-                </p>
+                <div
+                  className="prose prose-sm max-w-none text-sm text-foreground/70 leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: a.body }}
+                />
               </Card>
             ))}
           </div>

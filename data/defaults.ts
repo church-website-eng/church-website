@@ -157,6 +157,23 @@ export const defaultThemeSettings = {
   goldColor: "#d4a017",
 };
 
+export const defaultCareers = {
+  intro: "We believe every member has gifts to share. Whether you're looking to serve part-time, volunteer, or explore a career in ministry support, there are many ways to get involved at Goshen Cathedral.",
+  careers: [
+    { id: "1", title: "Youth Program Coordinator", type: "volunteer", description: "Help organize and lead our youth ministry programs, events, and outreach activities.", requirements: "Experience working with youth, strong organizational skills", contact: "info@cccgoshencathedral.ca" },
+    { id: "2", title: "Media & Communications", type: "volunteer", description: "Assist with live streaming, social media, photography, and video production for church services and events.", requirements: "Familiarity with social media platforms, basic video/photo skills", contact: "info@cccgoshencathedral.ca" },
+    { id: "3", title: "Music Ministry Volunteer", type: "volunteer", description: "Join the choir or music team. Singers and instrumentalists of all levels are welcome.", requirements: "A heart for worship, willingness to attend rehearsals", contact: "info@cccgoshencathedral.ca" },
+  ],
+  volunteerAreas: [
+    { id: "1", name: "Ushering & Hospitality", description: "Welcome visitors and members, assist during services, and ensure a warm church experience." },
+    { id: "2", name: "Children's Church", description: "Teach and care for children during Sunday services with engaging Bible lessons and activities." },
+    { id: "3", name: "Kitchen & Fellowship", description: "Help prepare and serve food for after-service fellowship and special church events." },
+    { id: "4", name: "Cleaning & Maintenance", description: "Keep God's house beautiful by helping with sanctuary cleaning and facility upkeep." },
+    { id: "5", name: "Welfare & Outreach", description: "Visit the sick, support families in need, and organize community outreach programs." },
+    { id: "6", name: "Technical / AV Team", description: "Operate sound systems, projectors, and live-streaming equipment during services." },
+  ],
+};
+
 export const defaultMinistries = {
   items: [
     { name: "Men's Fellowship", description: "Brotherhood in Christ \u2014 men gathering for prayer, Bible study, and mutual support. Building godly men who lead their families and serve the church.", leader: "Men's Leader", icon: "shield" },

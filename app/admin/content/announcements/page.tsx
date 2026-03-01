@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
+import RichTextEditor from "@/components/ui/RichTextEditor";
 import { defaultAnnouncements } from "@/data/defaults";
 
 type AnnouncementsData = typeof defaultAnnouncements;
@@ -102,12 +103,10 @@ export default function EditAnnouncements() {
                   <option value="info">Information</option>
                 </select>
               </div>
-              <textarea
+              <RichTextEditor
+                content={item.body}
+                onChange={(html) => updateItem(i, "body", html)}
                 placeholder="Announcement body..."
-                rows={3}
-                value={item.body}
-                onChange={(e) => updateItem(i, "body", e.target.value)}
-                className="w-full rounded-lg border border-border bg-white px-4 py-2.5 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
               />
             </div>
           </Card>

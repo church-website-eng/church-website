@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
+import RichTextEditor from "@/components/ui/RichTextEditor";
 
 interface ShepherdData {
   name: string;
@@ -123,12 +124,10 @@ export default function EditShepherdCorner() {
 
           <div>
             <label className="mb-1 block text-sm font-medium">Message Body</label>
-            <textarea
-              rows={8}
-              value={data.messageBody}
-              onChange={(e) => setData({ ...data, messageBody: e.target.value })}
+            <RichTextEditor
+              content={data.messageBody}
+              onChange={(html) => setData({ ...data, messageBody: html })}
               placeholder="Write the Shepherd's weekly message here..."
-              className="w-full rounded-lg border border-border bg-white px-4 py-2.5 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
             />
           </div>
         </Card>

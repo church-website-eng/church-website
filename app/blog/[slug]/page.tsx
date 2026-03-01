@@ -82,11 +82,10 @@ export default async function BlogPostPage({ params }: Props) {
             </div>
           )}
 
-          <article className="max-w-none space-y-4 text-foreground/80 leading-relaxed">
-            {data.body.split("\n\n").map((paragraph: string, i: number) => (
-              <p key={i}>{paragraph}</p>
-            ))}
-          </article>
+          <article
+            className="prose prose-sm sm:prose max-w-none text-foreground/80 leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: data.body }}
+          />
 
           <div className="mt-8 mb-8">
             <ShareButtons title={data.title} />

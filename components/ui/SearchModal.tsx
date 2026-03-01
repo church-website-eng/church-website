@@ -23,6 +23,7 @@ const sitePages: SearchResult[] = [
   { title: "Testimonies", href: "/testimonies", type: "Page" },
   { title: "Blog", href: "/blog", type: "Page" },
   { title: "Gallery", href: "/gallery", type: "Page" },
+  { title: "Careers & Volunteering", href: "/careers", type: "Page" },
   { title: "Shepherd's Corner", href: "/shepherd", type: "Page" },
   { title: "Facility Rentals", href: "/rentals", type: "Page" },
   { title: "Announcements & Calendar", href: "/announcements", type: "Page" },

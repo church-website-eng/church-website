@@ -60,9 +60,10 @@ export default async function ShepherdPage() {
                 <h3 className="mb-5 font-serif text-2xl font-bold text-primary">
                   {data.messageTitle}
                 </h3>
-                <div className="text-foreground/70 leading-relaxed whitespace-pre-line text-base">
-                  {data.messageBody}
-                </div>
+                <div
+                  className="prose prose-sm max-w-none text-foreground/70 leading-relaxed text-base"
+                  dangerouslySetInnerHTML={{ __html: data.messageBody }}
+                />
               </div>
 
               {data.videoUrl && (
