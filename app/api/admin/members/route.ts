@@ -70,11 +70,14 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { id, approved, role } = await request.json();
+  const { id, approved, role, name, birthMonth, birthDay } = await request.json();
 
-  const data: { approved?: boolean; role?: string } = {};
+  const data: { approved?: boolean; role?: string; name?: string; birthMonth?: number | null; birthDay?: number | null } = {};
   if (typeof approved === "boolean") data.approved = approved;
   if (role) data.role = role;
+  if (name && name.trim()) data.name = name.trim();
+  if (typeof birthMonth === "number") data.birthMonth = birthMonth || null;
+  if (typeof birthDay === "number") data.birthDay = birthDay || null;
 
   const updated = await prisma.user.update({
     where: { id },
