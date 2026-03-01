@@ -34,7 +34,7 @@ export default function LatestSermon({ sermon }: Props) {
         <div className="grid items-center gap-8 lg:grid-cols-2">
           {/* Video */}
           <div className="aspect-video overflow-hidden rounded-xl bg-primary/10 shadow-lg">
-            {videoUrl ? (
+            {videoUrl && videoUrl.startsWith("http") ? (
               <iframe
                 src={videoUrl}
                 className="h-full w-full"
