@@ -1,6 +1,7 @@
 import { getSermons } from "@/lib/contentful";
 import SermonCard from "@/components/sermons/SermonCard";
 import { placeholderSermons } from "@/data/sermons";
+import { getContent } from "@/lib/content";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -9,8 +10,17 @@ export const metadata: Metadata = {
 };
 
 export default async function SermonsPage() {
-  const sermons = await getSermons(20);
-  const items = sermons.length > 0 ? sermons : placeholderSermons;
+  const [contentfulSermons, dbData] = await Promise.all([
+    getSermons(20),
+    getContent("sermons", { sermons: [] } as { sermons: { id: string; title: string; speaker: string; date: string; series?: string; slug: string; videoUrl?: string; notes?: string }[] }),
+  ]);
+
+  // DB sermons first, then Contentful, then placeholder
+  const items = dbData.sermons.length > 0
+    ? dbData.sermons
+    : contentfulSermons.length > 0
+      ? contentfulSermons
+      : placeholderSermons;
 
   return (
     <>

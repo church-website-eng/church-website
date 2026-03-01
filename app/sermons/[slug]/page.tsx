@@ -1,5 +1,6 @@
 import { getSermonBySlug, getSermons } from "@/lib/contentful";
 import { placeholderSermons } from "@/data/sermons";
+import { getContent } from "@/lib/content";
 import Button from "@/components/ui/Button";
 import ShareButtons from "@/components/ui/ShareButtons";
 import { formatDate } from "@/lib/utils";
@@ -11,11 +12,17 @@ interface Props {
 
 export default async function SermonDetailPage({ params }: Props) {
   const { slug } = await params;
-  const sermon = await getSermonBySlug(slug);
+  const [sermon, dbData] = await Promise.all([
+    getSermonBySlug(slug),
+    getContent("sermons", { sermons: [] } as { sermons: { id: string; title: string; speaker: string; date: string; series?: string; slug: string; videoUrl?: string; notes?: string; pdfUrl?: string; audioUrl?: string }[] }),
+  ]);
+
+  // Check DB sermons first
+  const dbSermon = dbData.sermons.find((s) => s.slug === slug);
 
   // Fallback: look up placeholder data by slug
   const placeholder = placeholderSermons.find((s) => s.slug === slug);
-  const data = sermon || placeholder || {
+  const data = dbSermon || sermon || placeholder || {
     title: slug
       .split("-")
       .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
