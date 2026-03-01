@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
-import { FiPlus, FiTrash2, FiImage } from "react-icons/fi";
+import { FiPlus, FiTrash2, FiImage, FiUpload } from "react-icons/fi";
 
 interface GalleryPhoto {
   id: string;
@@ -16,6 +16,8 @@ export default function EditGallery() {
   const [photos, setPhotos] = useState<GalleryPhoto[]>([]);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [uploading, setUploading] = useState<string | null>(null);
+  const fileInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
 
   useEffect(() => {
     fetch("/api/admin/content/gallery")
@@ -35,6 +37,25 @@ export default function EditGallery() {
     setSaving(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);
+  };
+
+  const handleUpload = async (index: number, file: File) => {
+    const photo = photos[index];
+    setUploading(photo.id);
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch("/api/admin/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      updatePhoto(index, "url", data.url);
+    }
+    setUploading(null);
   };
 
   const updatePhoto = (index: number, field: keyof GalleryPhoto, value: string) => {
@@ -72,8 +93,7 @@ export default function EditGallery() {
       </div>
 
       <p className="mb-6 text-sm text-muted">
-        Upload photos via <strong>Media Library</strong> first, then paste the URL here.
-        Group photos by album name.
+        Upload photos directly or paste a URL. Group photos by album name.
       </p>
 
       <div className="space-y-4">
@@ -93,12 +113,35 @@ export default function EditGallery() {
 
               {/* Fields */}
               <div className="flex-1 space-y-2">
-                <input
-                  value={photo.url}
-                  onChange={(e) => updatePhoto(i, "url", e.target.value)}
-                  placeholder="Image URL (paste from Media Library)"
-                  className="w-full rounded-lg border border-border bg-white px-3 py-2 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
-                />
+                <div className="flex gap-2">
+                  <input
+                    value={photo.url}
+                    onChange={(e) => updatePhoto(i, "url", e.target.value)}
+                    placeholder="Image URL (paste or upload)"
+                    className="w-full rounded-lg border border-border bg-white px-3 py-2 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+                  />
+                  <input
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/gif"
+                    className="hidden"
+                    ref={(el) => { fileInputRefs.current[photo.id] = el; }}
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) handleUpload(i, file);
+                    }}
+                  />
+                  <button
+                    onClick={() => fileInputRefs.current[photo.id]?.click()}
+                    disabled={uploading === photo.id}
+                    className="shrink-0 rounded-lg border border-accent bg-accent/10 px-3 py-2 text-sm font-medium text-accent transition hover:bg-accent/20 disabled:opacity-50"
+                  >
+                    {uploading === photo.id ? (
+                      "Uploading..."
+                    ) : (
+                      <FiUpload size={16} />
+                    )}
+                  </button>
+                </div>
                 <div className="grid gap-2 sm:grid-cols-2">
                   <input
                     value={photo.caption}
