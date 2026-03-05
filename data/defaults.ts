@@ -174,6 +174,34 @@ export const defaultCareers = {
   ],
 };
 
+export const defaultContactPage = {
+  subtitle: "We\u2019d love to hear from you",
+  formHeading: "Send us a Message",
+  successMessage: "Thank you! We\u2019ll be in touch soon. God bless you.",
+  officeHours: "Sunday 10:00 AM \u2013 1:00 PM | Wednesday 9:00 AM & 6:00 PM | Friday 8:00 PM",
+  additionalInfo: "For urgent matters, please email the Shepherd directly at shepherd@celestialchurchcanada.com.",
+};
+
+export const defaultFooter = {
+  quickLinks: [
+    { label: "About Us", href: "/about" },
+    { label: "Sermons", href: "/sermons" },
+    { label: "Events", href: "/events" },
+    { label: "Give Online", href: "/give" },
+    { label: "Contact", href: "/contact" },
+  ],
+  tagline: "Ayo Mother Parish \u2022 Arch Diocese of Canada | National Headquarter",
+  copyrightExtra: "",
+};
+
+export const defaultDirectory = {
+  items: [
+    { id: "1", name: "VSE Kunle Lawal", title: "Shepherd-in-Charge \u2014 Goshen Cathedral", phone: "", email: "shepherd@celestialchurchcanada.com", ministry: "Parish Leadership", photoUrl: "/images/head-of-church.jpeg" },
+    { id: "2", name: "Church Secretary", title: "Church Secretary", phone: "", email: "", ministry: "Administration", photoUrl: "" },
+    { id: "3", name: "Mother-in-Celestial", title: "Mother-in-Celestial", phone: "", email: "", ministry: "Women's Fellowship", photoUrl: "" },
+  ],
+};
+
 export const defaultMinistries = {
   items: [
     { name: "Men's Fellowship", description: "Brotherhood in Christ \u2014 men gathering for prayer, Bible study, and mutual support. Building godly men who lead their families and serve the church.", leader: "Men's Leader", icon: "shield" },

@@ -1,27 +1,15 @@
-"use client";
-
-import { useState } from "react";
-import Card from "@/components/ui/Card";
-import Button from "@/components/ui/Button";
 import { FiMapPin, FiPhone, FiMail, FiClock } from "react-icons/fi";
+import Card from "@/components/ui/Card";
+import { getContent } from "@/lib/content";
+import { defaultChurchInfo, defaultServiceTimes, defaultContactPage } from "@/data/defaults";
+import ContactForm from "./ContactForm";
 
-export default function ContactPage() {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-    } catch {
-      // silently handle
-    }
-    setSubmitted(true);
-  };
+export default async function ContactPage() {
+  const [churchInfo, serviceTimes, contactPage] = await Promise.all([
+    getContent("church_info", defaultChurchInfo),
+    getContent("service_times", defaultServiceTimes),
+    getContent("contact_page", defaultContactPage),
+  ]);
 
   return (
     <>
@@ -30,7 +18,7 @@ export default function ContactPage() {
           Contact Us
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-white/70">
-          We&apos;d love to hear from you
+          {contactPage.subtitle}
         </p>
       </section>
 
@@ -38,79 +26,10 @@ export default function ContactPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2">
             {/* Contact form */}
-            <div>
-              <h2 className="mb-6 font-serif text-2xl font-bold text-primary">
-                Send us a Message
-              </h2>
-
-              {submitted ? (
-                <Card>
-                  <p className="text-center text-lg font-medium text-success">
-                    Thank you! We&apos;ll be in touch soon. God bless you.
-                  </p>
-                </Card>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="mb-1 block text-sm font-medium text-foreground"
-                    >
-                      Name
-                    </label>
-                    <input
-                      id="name"
-                      type="text"
-                      required
-                      value={form.name}
-                      onChange={(e) =>
-                        setForm({ ...form, name: e.target.value })
-                      }
-                      className="w-full rounded-lg border border-border bg-white px-4 py-2.5 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="mb-1 block text-sm font-medium text-foreground"
-                    >
-                      Email
-                    </label>
-                    <input
-                      id="email"
-                      type="email"
-                      required
-                      value={form.email}
-                      onChange={(e) =>
-                        setForm({ ...form, email: e.target.value })
-                      }
-                      className="w-full rounded-lg border border-border bg-white px-4 py-2.5 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="message"
-                      className="mb-1 block text-sm font-medium text-foreground"
-                    >
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      rows={5}
-                      required
-                      value={form.message}
-                      onChange={(e) =>
-                        setForm({ ...form, message: e.target.value })
-                      }
-                      className="w-full rounded-lg border border-border bg-white px-4 py-2.5 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
-                    />
-                  </div>
-                  <Button type="submit" variant="accent" size="lg">
-                    Send Message
-                  </Button>
-                </form>
-              )}
-            </div>
+            <ContactForm
+              formHeading={contactPage.formHeading}
+              successMessage={contactPage.successMessage}
+            />
 
             {/* Info cards */}
             <div className="space-y-6">
@@ -120,25 +39,43 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-primary">Address</h3>
                     <p className="text-sm text-muted">
-                      Goshen Cathedral<br />
-                      Celestial Church of Christ<br />
-                      441 Rubidge Street<br />
-                      Peterborough, ON<br />
+                      {churchInfo.cathedralName}<br />
+                      {churchInfo.churchName}<br />
+                      {churchInfo.street}<br />
+                      {churchInfo.city}, {churchInfo.province}<br />
                       Arch Diocese of Canada
                     </p>
                   </div>
                 </div>
               </Card>
 
-              <Card>
-                <div className="flex items-start gap-4">
-                  <FiPhone className="mt-1 text-accent" size={20} />
-                  <div>
-                    <h3 className="font-semibold text-primary">Phone</h3>
-                    <p className="text-sm text-muted">Contact the parish office</p>
+              {churchInfo.phone && (
+                <Card>
+                  <div className="flex items-start gap-4">
+                    <FiPhone className="mt-1 text-accent" size={20} />
+                    <div>
+                      <h3 className="font-semibold text-primary">Phone</h3>
+                      <p className="text-sm text-muted">
+                        <a href={`tel:${churchInfo.phone}`} className="hover:text-accent">
+                          {churchInfo.phone}
+                        </a>
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </Card>
+                </Card>
+              )}
+
+              {!churchInfo.phone && (
+                <Card>
+                  <div className="flex items-start gap-4">
+                    <FiPhone className="mt-1 text-accent" size={20} />
+                    <div>
+                      <h3 className="font-semibold text-primary">Phone</h3>
+                      <p className="text-sm text-muted">Contact the parish office</p>
+                    </div>
+                  </div>
+                </Card>
+              )}
 
               <Card>
                 <div className="flex items-start gap-4">
@@ -146,7 +83,9 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-primary">Email</h3>
                     <p className="text-sm text-muted">
-                      shepherd@celestialchurchcanada.com
+                      <a href={`mailto:${churchInfo.email}`} className="hover:text-accent">
+                        {churchInfo.email}
+                      </a>
                     </p>
                   </div>
                 </div>
@@ -157,16 +96,26 @@ export default function ContactPage() {
                   <FiClock className="mt-1 text-accent" size={20} />
                   <div>
                     <h3 className="font-semibold text-primary">Service Times</h3>
-                    <p className="text-sm text-muted">
-                      Sunday: 10:00 AM – 1:00 PM — Main Service<br />
-                      Wednesday: 9:00 AM (Seeker) & 6:00 PM (Mercy)<br />
-                      Friday: 8:00 PM — Special Service<br />
-                      1st Thursday: 10:00 PM – 1:00 AM — New Moon Service<br />
-                      Saturday: 7:00 AM — Sanctuary Cleaning
-                    </p>
+                    <div className="text-sm text-muted space-y-0.5">
+                      {serviceTimes.services.map((s: { day: string; times: string[] }) => (
+                        <p key={s.day}>{s.day}: {s.times[0]}</p>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </Card>
+
+              {contactPage.officeHours && (
+                <Card>
+                  <div className="flex items-start gap-4">
+                    <FiClock className="mt-1 text-accent" size={20} />
+                    <div>
+                      <h3 className="font-semibold text-primary">Office Hours</h3>
+                      <p className="text-sm text-muted">{contactPage.officeHours}</p>
+                    </div>
+                  </div>
+                </Card>
+              )}
 
               {/* Map */}
               <div className="h-64 overflow-hidden rounded-xl">
@@ -179,6 +128,12 @@ export default function ContactPage() {
                   title="Goshen Cathedral Location"
                 />
               </div>
+
+              {contactPage.additionalInfo && (
+                <p className="text-sm text-muted italic">
+                  {contactPage.additionalInfo}
+                </p>
+              )}
             </div>
           </div>
         </div>

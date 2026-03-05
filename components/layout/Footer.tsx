@@ -1,13 +1,13 @@
 import Link from "next/link";
-import Image from "next/image";
 import { FiFacebook, FiYoutube, FiInstagram, FiMail, FiMusic } from "react-icons/fi";
 import { getContent } from "@/lib/content";
-import { defaultChurchInfo, defaultServiceTimes } from "@/data/defaults";
+import { defaultChurchInfo, defaultServiceTimes, defaultFooter } from "@/data/defaults";
 
 export default async function Footer() {
-  const [churchInfo, serviceTimes] = await Promise.all([
+  const [churchInfo, serviceTimes, footerData] = await Promise.all([
     getContent("church_info", defaultChurchInfo),
     getContent("service_times", defaultServiceTimes),
+    getContent("footer", defaultFooter),
   ]);
 
   const socialLinks = [
@@ -37,10 +37,9 @@ export default async function Footer() {
           </div>
           <p className="text-sm text-white/70 leading-relaxed">
             {churchInfo.cathedralName}<br />
-            Ayo Mother Parish<br />
+            {footerData.tagline || "Ayo Mother Parish"}<br />
             {churchInfo.street}<br />
-            {churchInfo.city}, {churchInfo.province}<br />
-            Arch Diocese of Canada | National Headquarter
+            {churchInfo.city}, {churchInfo.province}
           </p>
         </div>
 
@@ -50,7 +49,7 @@ export default async function Footer() {
             Service Times
           </h4>
           <ul className="space-y-1 text-sm text-white/70">
-            {serviceTimes.services.map((s) => (
+            {serviceTimes.services.map((s: { day: string; times: string[] }) => (
               <li key={s.day}>{s.day}: {s.times[0]}</li>
             ))}
           </ul>
@@ -62,13 +61,7 @@ export default async function Footer() {
             Quick Links
           </h4>
           <ul className="space-y-1 text-sm">
-            {[
-              { label: "About Us", href: "/about" },
-              { label: "Sermons", href: "/sermons" },
-              { label: "Events", href: "/events" },
-              { label: "Give Online", href: "/give" },
-              { label: "Contact", href: "/contact" },
-            ].map((link) => (
+            {footerData.quickLinks.map((link: { label: string; href: string }) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
@@ -106,7 +99,10 @@ export default async function Footer() {
       </div>
 
       <div className="border-t border-white/10 px-4 py-4 text-center text-xs text-white/50">
-        <p>&copy; {new Date().getFullYear()} {churchInfo.churchName} — {churchInfo.cathedralName}. All rights reserved.</p>
+        <p>
+          &copy; {new Date().getFullYear()} {churchInfo.churchName} — {churchInfo.cathedralName}.
+          {footerData.copyrightExtra ? ` ${footerData.copyrightExtra}.` : ""} All rights reserved.
+        </p>
         <Link href="/privacy" className="mt-1 inline-block text-white/40 transition hover:text-gold">
           Privacy Policy
         </Link>
