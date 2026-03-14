@@ -1,11 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import { FiUsers, FiCheck, FiMapPin, FiPhone, FiMail, FiCalendar } from "react-icons/fi";
 
-const halls = [
+interface Hall {
+  name: string;
+  capacity: number;
+  rate: string;
+  description: string;
+  amenities: string[];
+}
+
+const defaultHalls: Hall[] = [
   {
     name: "Main Hall",
     capacity: 200,
@@ -41,6 +49,15 @@ const halls = [
 ];
 
 export default function RentalsPage() {
+  const [halls, setHalls] = useState<Hall[]>(defaultHalls);
+
+  useEffect(() => {
+    fetch("/api/content/rentals")
+      .then((r) => r.json())
+      .then((res) => { if (res.value?.halls) setHalls(res.value.halls); })
+      .catch(() => {});
+  }, []);
+
   const [form, setForm] = useState({
     name: "",
     email: "",
